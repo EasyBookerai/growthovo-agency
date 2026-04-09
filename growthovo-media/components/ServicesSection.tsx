@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Palette, Server, Key, Smartphone, TrendingUp } from "lucide-react";
+import { Zap, Palette, Server, Key, Smartphone, TrendingUp, type LucideIcon } from "lucide-react";
 import { SERVICES, type Service } from "@/lib/constants";
 
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   Zap, Palette, Server, Key, Smartphone, TrendingUp,
 };
 
