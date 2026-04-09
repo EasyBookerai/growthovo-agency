@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growthovo Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #000;
+      --white: #fff;
+      --zinc-400: #a1a1aa;
+      --zinc-500: #71717a;
+      --zinc-600: #52525b;
+      --zinc-800: #27272a;
+      --zinc-900: #18181b;
+      --green: #4ade80;
+      --accent: #fff;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+    /* ── LANGUAGE POPUP ── */
+    #lang-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; backdrop-filter: blur(8px);
+      animation: fadeIn .3s ease;
+    }
+    #lang-overlay.hidden { display: none; }
+    .lang-box {
+      background: #111; border: 1px solid #333; border-radius: 20px;
+      padding: 40px 32px; max-width: 420px; width: 90%; text-align: center;
+      animation: slideUp .4s cubic-bezier(.22,1,.36,1);
+    }
+    .lang-box h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 8px; }
+    .lang-box p { color: var(--zinc-400); font-size: .9rem; margin-bottom: 28px; }
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .lang-btn {
+      background: #1a1a1a; border: 1px solid #333; color: var(--white);
+      padding: 14px 10px; border-radius: 12px; font-size: .95rem; font-weight: 600;
+      cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .lang-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: scale(1.03); }
+    .lang-flag { font-size: 1.3rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #111;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 64px;
+    }
+    .nav-brand { font-weight: 900; font-size: 1.1rem; text-decoration: none; color: var(--white); }
+    .nav-brand span { color: var(--zinc-400); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--zinc-400); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--white); color: var(--black); font-weight: 700;
+      padding: 8px 20px; border-radius: 999px; font-size: .875rem;
+      text-decoration: none; transition: all .2s;
+    }
+    .nav-cta:hover { background: #e4e4e7; transform: scale(1.04); }
+    .nav-lang-btn {
+      background: none; border: 1px solid #333; color: var(--zinc-400);
+      padding: 6px 12px; border-radius: 8px; font-size: .8rem; cursor: pointer;
+      transition: all .2s; margin-right: 12px;
+    }
+    .nav-lang-btn:hover { border-color: var(--white); color: var(--white); }
+    .hamburger { display: none; background: none; border: none; color: var(--white); cursor: pointer; font-size: 1.4rem; }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: #0a0a0a; border-bottom: 1px solid #111;
+      padding: 20px 5%; flex-direction: column; gap: 16px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--zinc-300,#d4d4d8); text-decoration: none; font-size: 1rem; font-weight: 500; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 5%; max-width: 1100px; margin: 0 auto; }
+    .pt-nav { padding-top: 64px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      position: relative; max-width: 100%; padding: 120px 5% 80px;
+    }
+    .hero-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #222; border-radius: 999px; padding: 6px 16px;
+      font-size: .75rem; color: var(--zinc-400); background: rgba(255,255,255,0.03);
+      margin-bottom: 28px; animation: fadeIn .6s ease;
+    }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -.02em; margin-bottom: 20px; }
+    h1 .muted { color: var(--zinc-400); }
+    .hero-sub { font-size: clamp(.95rem, 2vw, 1.15rem); color: var(--zinc-400); max-width: 600px; margin: 0 auto 36px; }
+    .hero-sub strong { color: var(--white); }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--black); font-weight: 700;
+      padding: 14px 32px; border-radius: 999px; font-size: 1rem;
+      text-decoration: none; transition: all .2s;
+      box-shadow: 0 0 30px rgba(255,255,255,0.12);
+    }
+    .btn-primary:hover { background: #e4e4e7; transform: scale(1.05); }
+    .btn-ghost { color: var(--zinc-400); font-size: .875rem; text-decoration: underline; text-underline-offset: 4px; transition: color .2s; }
+    .btn-ghost:hover { color: var(--white); }
+    .hero-btns { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .stats { display: flex; gap: 40px; margin-top: 60px; flex-wrap: wrap; justify-content: center; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 900; color: var(--white); }
+    .stat-label { font-size: .8rem; color: var(--zinc-500); }
+    .divider { width: 1px; height: 40px; background: var(--zinc-800); align-self: center; }
+
+    /* ── SECTION HEADER ── */
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-tag { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--zinc-500); margin-bottom: 12px; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.02em; }
+    h2 .muted { color: var(--zinc-400); }
+
+    /* ── SERVICES ── */
+    #services { padding-top: 80px; }
+    .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: var(--zinc-900); border: 1px solid var(--zinc-800);
+      border-radius: 18px; padding: 28px; transition: all .3s;
+      position: relative; overflow: hidden;
+    }
+    .card:hover { border-color: #444; background: #1f1f1f; transform: translateY(-2px); }
+    .card.wide { grid-column: span 2; }
+    .card-icon { font-size: 1.6rem; margin-bottom: 14px; }
+    .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: .875rem; color: var(--zinc-400); line-height: 1.6; }
+
+    /* ── ABOUT ── */
+    #about { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-img {
+      aspect-ratio: 4/3; background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+      border-radius: 20px; border: 1px solid var(--zinc-800);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; color: var(--zinc-700,#3f3f46);
+    }
+    .about-text h2 { margin-bottom: 16px; }
+    .about-text p { color: var(--zinc-400); margin-bottom: 16px; font-size: .95rem; }
+    .about-text .btn-primary { margin-top: 8px; }
+    .check-list { list-style: none; margin: 20px 0; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li { display: flex; align-items: center; gap: 10px; font-size: .9rem; color: var(--zinc-300,#d4d4d8); }
+    .check-list li::before { content: "✓"; color: var(--green); font-weight: 700; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { padding-top: 80px; }
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gallery-item {
+      aspect-ratio: 4/3; border-radius: 16px; overflow: hidden;
+      background: linear-gradient(135deg, #111, #1c1c1c);
+      border: 1px solid var(--zinc-800); position: relative;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .3s;
+    }
+    .gallery-item:hover { transform: scale(1.02); border-color: #555; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .3s; font-size: .875rem; font-weight: 600;
+    }
+    .gallery-placeholder { font-size: 2.5rem; color: var(--zinc-700,#3f3f46); }
+    .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; min-height: 300px; }
+
+    /* ── CONTACT ── */
+    #contact { padding-top: 80px; }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info p { color: var(--zinc-400); font-size: .95rem; margin-bottom: 24px; }
+    .contact-detail { display: flex; align-items: center; gap: 10px; color: var(--zinc-300,#d4d4d8); font-size: .9rem; margin-bottom: 12px; }
+    .contact-detail span:first-child { font-size: 1.1rem; }
+    form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: .8rem; font-weight: 600; color: var(--zinc-400); letter-spacing: .05em; text-transform: uppercase; }
+    input, textarea {
+      background: var(--zinc-900); border: 1px solid var(--zinc-800);
+      border-radius: 12px; padding: 12px 16px; color: var(--white);
+      font-size: .9rem; font-family: inherit; transition: border-color .2s;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--white); }
+    textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      background: var(--white); color: var(--black); font-weight: 700;
+      padding: 14px; border-radius: 12px; border: none; font-size: .95rem;
+      cursor: pointer; transition: all .2s; font-family: inherit;
+    }
+    .btn-submit:hover { background: #e4e4e7; transform: scale(1.02); }
+    .form-success { display: none; text-align: center; padding: 24px; color: var(--green); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid #111; padding: 32px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; font-size: .85rem; color: var(--zinc-600);
+    }
+    footer a { color: var(--zinc-500); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--white); }
+    .footer-links { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .bento { grid-template-columns: 1fr 1fr; }
+      .card.wide { grid-column: span 2; }
+      #about { grid-template-columns: 1fr; }
+      .about-img { display: none; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .gallery-item.tall { grid-row: span 1; min-height: auto; }
+      .divider { display: none; }
+    }
+    @media (max-width: 600px) {
+      .nav-links, .nav-cta, .nav-lang-btn { display: none; }
+      .hamburger { display: block; }
+      .bento { grid-template-columns: 1fr; }
+      .card.wide { grid-column: span 1; }
+      .gallery { grid-template-columns: 1fr; }
+      .lang-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 60px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LANGUAGE POPUP -->
+<div id="lang-overlay">
+  <div class="lang-box">
+    <h2>🌍 Welcome</h2>
+    <p id="lang-prompt">What language do you prefer?</p>
+    <div class="lang-grid">
+      <button class="lang-btn" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+      <button class="lang-btn" onclick="setLang('ro')"><span class="lang-flag">🇷🇴</span> Română</button>
+      <button class="lang-btn" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Français</button>
+      <button class="lang-btn" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span> Español</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-brand">Growthovo<span>Media</span></a>
+  <ul class="nav-links">
+    <li><a href="#services" data-i18n="nav_services">Services</a></li>
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#portfolio" data-i18n="nav_portfolio">Portfolio</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="nav-lang-btn" onclick="showLangPicker()" title="Change language">🌍</button>
+    <a href="#contact" class="nav-cta" data-i18n="nav_cta">Get Started</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" onclick="toggleMenu()" data-i18n="nav_services">Services</a>
+  <a href="#about" onclick="toggleMenu()" data-i18n="nav_about">About</a>
+  <a href="#portfolio" onclick="toggleMenu()" data-i18n="nav_portfolio">Portfolio</a>
+  <a href="#contact" onclick="toggleMenu()" data-i18n="nav_contact">Contact</a>
+  <button class="lang-btn" style="margin-top:8px;" onclick="toggleMenu();showLangPicker()">🌍 Change Language</button>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="fade-in">
+  <div class="hero-glow"></div>
+  <div class="badge"><span class="badge-dot"></span><span data-i18n="badge">Available for new projects</span></div>
+  <h1 data-i18n="hero_title">Your Business Deserves<br><span class="muted">a Website That Converts.</span></h1>
+  <p class="hero-sub" data-i18n="hero_sub">Clean, fast, and professional websites for businesses ready to grow. One-time payment. <strong>No monthly fees. No surprises.</strong></p>
+  <div class="hero-btns">
+    <a href="https://wa.me/40734462634?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20the%20Growthovo%20Media%20offer" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="hero_cta">Get My Website — from €150 →</a>
+    <a href="#services" class="btn-ghost" data-i18n="hero_ghost">See what's included</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">100/100</div><div class="stat-label">PageSpeed Score</div></div>
+    <div class="divider"></div>
+    <div class="stat"><div class="stat-num">€0</div><div class="stat-label" data-i18n="stat_hosting">Hosting — forever</div></div>
+    <div class="divider"></div>
+    <div class="stat"><div class="stat-num">1×</div><div class="stat-label" data-i18n="stat_pay">Pay once, own it</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="fade-in">
+  <div class="section-header">
+    <p class="section-tag" data-i18n="services_tag">What You Get</p>
+    <h2 data-i18n="services_title">Everything you need.<br><span class="muted">Nothing you don't.</span></h2>
+  </div>
+  <div class="bento">
+    <div class="card wide"><div class="card-icon">⚡</div><h3 data-i18n="s1_title">Blazing Fast Performance</h3><p data-i18n="s1_desc">Built with Next.js for maximum speed. 100/100 Google PageSpeed score — guaranteed.</p></div>
+    <div class="card"><div class="card-icon">🎨</div><h3 data-i18n="s2_title">Custom Design</h3><p data-i18n="s2_desc">No tired templates. Every pixel crafted specifically for your brand.</p></div>
+    <div class="card"><div class="card-icon">🖥️</div><h3 data-i18n="s3_title">Free Hosting — Forever</h3><p data-i18n="s3_desc">Deployed on Vercel at zero cost. Save €100+/year vs traditional hosting.</p></div>
+    <div class="card"><div class="card-icon">🔑</div><h3 data-i18n="s4_title">You Own Everything</h3><p data-i18n="s4_desc">Your domain, your code, your site. No lock-in, no dependencies.</p></div>
+    <div class="card"><div class="card-icon">📱</div><h3 data-i18n="s5_title">Mobile-First</h3><p data-i18n="s5_desc">Looks and feels like a premium app on any device. Smooth, fluid experience.</p></div>
+    <div class="card"><div class="card-icon">📈</div><h3 data-i18n="s6_title">SEO Ready</h3><p data-i18n="s6_desc">Technically sound from day one. Built to rank and get found on Google.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-in">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p class="section-tag" data-i18n="contact_tag">Get in Touch</p>
+      <h2 data-i18n="contact_title">Ready to get started?</h2>
+      <p data-i18n="contact_sub">I reply within 24 hours. Or message me directly on WhatsApp.</p>
+      <div class="contact-detail"><span>📱</span><span>0734 462 634</span></div>
+      <a href="https://wa.me/40734462634?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20the%20Growthovo%20Media%20offer" target="_blank" rel="noopener noreferrer" class="btn-primary" style="margin-top:16px;display:inline-flex;" data-i18n="contact_wa">Message on WhatsApp →</a>
+    </div>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-group"><label data-i18n="form_name">Name</label><input type="text" id="f-name" placeholder="Your name" required /></div>
+      <div class="form-group"><label data-i18n="form_email">Email</label><input type="email" id="f-email" placeholder="you@example.com" required /></div>
+      <div class="form-group"><label data-i18n="form_msg">Message</label><textarea id="f-msg" placeholder="Tell me about your project..." required></textarea></div>
+      <button type="submit" class="btn-submit" data-i18n="form_submit">Send Message</button>
+      <div class="form-success" id="form-success" data-i18n="form_ok">Message sent! I'll get back to you soon.</div>
+    </form>
+  </div>
+</section>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/40734462634?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20the%20Growthovo%20Media%20offer" target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp" style="position:fixed;bottom:24px;right:24px;z-index:200;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform .2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Growthovo Media</span>
+  <div class="footer-links">
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const PHONE = "40734462634";
+  const WA_TEXT = encodeURIComponent("Hi, I'd like to learn more about the Growthovo Media offer");
+  const WA_LINK = `https://wa.me/${PHONE}?text=${WA_TEXT}`;
+
+  const i18n = {
+    en: {
+      nav_services:"Services", nav_about:"About", nav_portfolio:"Portfolio",
+      nav_contact:"Contact", nav_cta:"Get Started",
+      badge:"Available for new projects",
+      hero_title:"Your Business Deserves<br><span class='muted'>a Website That Converts.</span>",
+      hero_sub:"Clean, fast, and professional websites for businesses ready to grow. One-time payment. <strong>No monthly fees. No surprises.</strong>",
+      hero_cta:"Get My Website — from €150 →", hero_ghost:"See what's included",
+      stat_hosting:"Hosting — forever", stat_pay:"Pay once, own it",
+      services_tag:"What You Get", services_title:"Everything you need.<br><span class='muted'>Nothing you don't.</span>",
+      s1_title:"Blazing Fast Performance", s1_desc:"Built with Next.js for maximum speed. 100/100 Google PageSpeed score — guaranteed.",
+      s2_title:"Custom Design", s2_desc:"No tired templates. Every pixel crafted specifically for your brand.",
+      s3_title:"Free Hosting — Forever", s3_desc:"Deployed on Vercel at zero cost. Save €100+/year vs traditional hosting.",
+      s4_title:"You Own Everything", s4_desc:"Your domain, your code, your site. No lock-in, no dependencies.",
+      s5_title:"Mobile-First", s5_desc:"Looks and feels like a premium app on any device. Smooth, fluid experience.",
+      s6_title:"SEO Ready", s6_desc:"Technically sound from day one. Built to rank and get found on Google.",
+      contact_tag:"Get in Touch", contact_title:"Ready to get started?",
+      contact_sub:"I reply within 24 hours. Or message me directly on WhatsApp.",
+      contact_wa:"Message on WhatsApp →",
+      form_name:"Name", form_email:"Email", form_msg:"Message", form_submit:"Send Message",
+      form_ok:"Message sent! I'll get back to you soon.",
+    },
+    ro: {
+      nav_services:"Servicii", nav_about:"Despre", nav_portfolio:"Portofoliu",
+      nav_contact:"Contact", nav_cta:"Începe Acum",
+      badge:"Disponibil pentru proiecte noi",
+      hero_title:"Afacerea Ta Merită<br><span class='muted'>un Site Care Convertește.</span>",
+      hero_sub:"Site-uri curate, rapide și profesionale pentru afaceri gata să crească. Plată unică. <strong>Fără taxe lunare. Fără surprize.</strong>",
+      hero_cta:"Vreau site-ul meu — de la €150 →", hero_ghost:"Vezi ce include",
+      stat_hosting:"Hosting — pe viață", stat_pay:"Plătești o dată",
+      services_tag:"Ce Primești", services_title:"Tot ce ai nevoie.<br><span class='muted'>Nimic în plus.</span>",
+      s1_title:"Performanță Maximă", s1_desc:"Construit cu Next.js. Scor 100/100 Google PageSpeed — garantat.",
+      s2_title:"Design Personalizat", s2_desc:"Fără șabloane. Fiecare pixel creat special pentru brandul tău.",
+      s3_title:"Free Hosting — Forever", s3_desc:"Deployed on Vercel at zero cost. Save €100+/year vs traditional hosting.",
+      s4_title:"Tu Deții Totul", s4_desc:"Domeniu, cod, site — ale tale. Fără dependențe.",
+      s5_title:"Mobile-First", s5_desc:"Arată și se simte ca o aplicație premium pe orice dispozitiv.",
+      s6_title:"SEO Optimizat", s6_desc:"Tehnic solid din prima zi. Construit să fie găsit pe Google.",
+      contact_tag:"Ia Legătura", contact_title:"Gata să începi?",
+      contact_sub:"Răspund în 24 de ore. Sau scrie-mi direct pe WhatsApp.",
+      contact_wa:"Scrie pe WhatsApp →",
+      form_name:"Nume", form_email:"Email", form_msg:"Mesaj", form_submit:"Trimite Mesajul",
+      form_ok:"Mesaj trimis! Revin în curând.",
+    },
+    fr: {
+      nav_services:"Services", nav_about:"À propos", nav_portfolio:"Portfolio",
+      nav_contact:"Contact", nav_cta:"Commencer",
+      badge:"Disponible pour de nouveaux projets",
+      hero_title:"Votre Entreprise Mérite<br><span class='muted'>un Site qui Convertit.</span>",
+      hero_sub:"Sites web propres, rapides et professionnels. Paiement unique. <strong>Sans frais mensuels.</strong>",
+      hero_cta:"Mon Site — à partir de €150 →", hero_ghost:"Voir ce qui est inclus",
+      stat_hosting:"Hébergement — gratuit", stat_pay:"Payez une fois",
+      services_tag:"Ce que vous obtenez", services_title:"Tout ce qu'il faut.<br><span class='muted'>Rien de superflu.</span>",
+      s1_title:"Performance Maximale", s1_desc:"Construit avec Next.js. Score 100/100 Google PageSpeed — garanti.",
+      s2_title:"Design Personnalisé", s2_desc:"Pas de templates. Chaque pixel conçu pour votre marque.",
+      s3_title:"Hébergement Gratuit", s3_desc:"Déployé sur Vercel sans frais. Économisez €100+/an.",
+      s4_title:"Vous Possédez Tout", s4_desc:"Votre domaine, votre code, votre site. Sans dépendances.",
+      s5_title:"Mobile-First", s5_desc:"Ressemble à une app premium sur tous les appareils.",
+      s6_title:"SEO Prêt", s6_desc:"Techniquement solide dès le premier jour.",
+      contact_tag:"Contactez-nous", contact_title:"Prêt à commencer?",
+      contact_sub:"Je réponds sous 24h. Ou écrivez-moi sur WhatsApp.",
+      contact_wa:"Message sur WhatsApp →",
+      form_name:"Nom", form_email:"Email", form_msg:"Message", form_submit:"Envoyer",
+      form_ok:"Message envoyé! Je vous réponds bientôt.",
+    },
+    es: {
+      nav_services:"Servicios", nav_about:"Sobre", nav_portfolio:"Portafolio",
+      nav_contact:"Contacto", nav_cta:"Empezar",
+      badge:"Disponible para nuevos proyectos",
+      hero_title:"Tu Negocio Merece<br><span class='muted'>un Sitio que Convierte.</span>",
+      hero_sub:"Sitios web limpios, rápidos y profesionales. Pago único. <strong>Sin tarifas mensuales.</strong>",
+      hero_cta:"Mi Sitio — desde €150 →", hero_ghost:"Ver qué incluye",
+      stat_hosting:"Hosting — para siempre", stat_pay:"Paga una vez",
+      services_tag:"Lo que obtienes", services_title:"Todo lo que necesitas.<br><span class='muted'>Nada más.</span>",
+      s1_title:"Rendimiento Máximo", s1_desc:"Construido con Next.js. Puntuación 100/100 Google PageSpeed — garantizado.",
+      s2_title:"Diseño Personalizado", s2_desc:"Sin plantillas. Cada píxel creado para tu marca.",
+      s3_title:"Hosting Gratuito", s3_desc:"Desplegado en Vercel sin costos. Ahorra €100+/año.",
+      s4_title:"Tú Eres el Dueño", s4_desc:"Tu dominio, tu código, tu sitio. Sin dependencias.",
+      s5_title:"Mobile-First", s5_desc:"Se ve como una app premium en cualquier dispositivo.",
+      s6_title:"SEO Listo", s6_desc:"Técnicamente sólido desde el primer día.",
+      contact_tag:"Contáctanos", contact_title:"¿Listo para empezar?",
+      contact_sub:"Respondo en 24 horas. O escríbeme en WhatsApp.",
+      contact_wa:"Mensaje en WhatsApp →",
+      form_name:"Nombre", form_email:"Email", form_msg:"Mensaje", form_submit:"Enviar",
+      form_ok:"¡Mensaje enviado! Te respondo pronto.",
+    }
+  };
+
+  let currentLang = localStorage.getItem("lang") || null;
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem("lang", lang);
+    document.getElementById("lang-overlay").classList.add("hidden");
+    applyLang(lang);
+  }
+
+  function showLangPicker() {
+    document.getElementById("lang-overlay").classList.remove("hidden");
+  }
+
+  function applyLang(lang) {
+    const t = i18n[lang] || i18n.en;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    // Update all WhatsApp links
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = WA_LINK);
+  }
+
+  function toggleMenu() {
+    document.getElementById("mobile-menu").classList.toggle("open");
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById("form-success").style.display = "block";
+    e.target.reset();
+  }
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+  // Init — default to English, skip language popup
+  if (!currentLang) {
+    currentLang = "en";
+    localStorage.setItem("lang", "en");
+  }
+  document.getElementById("lang-overlay").classList.add("hidden");
+  applyLang(currentLang);
+</script>
+</body>
+</html>
