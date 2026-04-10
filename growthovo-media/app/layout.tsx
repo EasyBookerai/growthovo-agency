@@ -9,14 +9,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Growthovo Media — Premium Websites, Free Hosting Forever",
+  title: "Growthovo Media — Site-uri Premium, Hosting Gratuit pe Viață",
   description:
-    "I build clean, fast, and professional websites for businesses ready to grow. Starting from €150, no monthly fees, free hosting forever.",
-  keywords: ["web design", "website", "Next.js", "Growthovo", "Romania"],
+    "Construiesc site-uri curate, rapide și profesionale pentru afaceri pregătite să crească. De la 120 EUR, fără abonament lunar, hosting gratuit pe viață.",
+  keywords: ["web design", "site web", "Next.js", "Growthovo"],
   openGraph: {
-    title: "Growthovo Media — Premium Websites, Free Hosting Forever",
+    title: "Growthovo Media — Site-uri Premium, Hosting Gratuit pe Viață",
     description:
-      "Professional websites from €150. Free hosting forever via Vercel. One-time payment.",
+      "Site-uri profesionale de la 120 EUR. Hosting gratuit pe viață prin Vercel. Plată unică.",
     type: "website",
   },
 };
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="ro" className={inter.variable}>
       <body className="bg-black text-white antialiased">{children}</body>
     </html>
   );

@@ -27,7 +27,7 @@ export default function Navigation() {
         <a
           href="#"
           className="text-white font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
-          aria-label="Growthovo Media - Home"
+          aria-label="Growthovo Media - Acasă"
         >
           Growthovo<span className="text-zinc-400">Media</span>
         </a>
@@ -51,13 +51,13 @@ export default function Navigation() {
           rel="noopener noreferrer"
           className="hidden md:inline-flex items-center gap-2 bg-white text-black text-sm font-semibold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors duration-200"
         >
-          Începe Acum →
+          Începe acum &#8594;
         </a>
 
         <button
           className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={menuOpen ? "Închide meniu" : "Deschide meniu"}
           aria-expanded={menuOpen}
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -93,7 +93,7 @@ export default function Navigation() {
                   className="inline-flex items-center gap-2 bg-white text-black text-sm font-semibold px-4 py-2 rounded-full mt-2"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Începe Acum →
+                  Începe acum &#8594;
                 </a>
               </li>
             </ul>

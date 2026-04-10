@@ -2,31 +2,31 @@
 
 import { motion } from "framer-motion";
 import { Zap, Eye, MessageCircle, Star } from "lucide-react";
-import { WHATSAPP_LINK } from "@/lib/constants";
 
 const DEMO_STEPS = [
   {
     icon: MessageCircle,
     title: "1. Scrie-mi pe WhatsApp",
-    desc: "Îmi spui domeniul tău de activitate și ce vrei să transmiți.",
+    desc: "Spune-mi domeniul tău și ce vrei să comunici.",
   },
   {
     icon: Eye,
     title: "2. Primești demo-ul în 24h",
-    desc: "Îți construiesc un demo personalizat, gratuit, fără nicio obligație.",
+    desc: "Construiesc un demo personalizat pentru tine, gratuit, fără nicio obligație.",
   },
   {
     icon: Star,
     title: "3. Dacă îți place, continuăm",
-    desc: "Plătești doar dacă ești 100% mulțumit de ce ai văzut.",
+    desc: "Plătești doar dacă ești 100% mulțumit de ce vezi.",
   },
 ];
 
-const WHATSAPP_DEMO = "https://wa.me/40734462634?text=Bun%C4%83%20ziua%2C%20a%C8%99%20vrea%20un%20demo%20gratuit%20pentru%20site-ul%20meu!";
+const WHATSAPP_DEMO =
+  "https://wa.me/40734462634?text=Buna%2C%20as%20dori%20un%20demo%20gratuit%20pentru%20site-ul%20meu!";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6" aria-label="Demo Gratuit">
+    <section id="contact" className="py-24 px-4 sm:px-6" aria-label="Free Demo">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -45,7 +45,7 @@ export default function ContactSection() {
             <span className="text-zinc-400">să plătești un leu.</span>
           </h2>
           <p className="text-zinc-500 text-base max-w-xl mx-auto">
-            Îți fac un demo complet, personalizat pentru afacerea ta. Plătești doar dacă ești convins.
+            Construiesc un demo complet, personalizat pentru afacerea ta. Plătești doar dacă ești convins.
           </p>
         </motion.div>
 
@@ -82,10 +82,10 @@ export default function ContactSection() {
             className="inline-flex items-center gap-3 bg-white text-black font-black py-4 px-10 rounded-2xl text-base hover:bg-zinc-100 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)]"
           >
             <MessageCircle size={20} />
-            Vreau demo-ul meu gratuit →
+            Obține demo-ul meu gratuit &#8594;
           </a>
           <p className="text-zinc-600 text-xs mt-4">
-            Răspund în maxim 24 de ore. Zero spam, zero obligații.
+            Răspund în 24 de ore. Zero spam, zero obligații.
           </p>
         </motion.div>
       </div>

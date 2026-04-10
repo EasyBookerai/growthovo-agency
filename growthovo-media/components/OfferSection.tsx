@@ -6,9 +6,9 @@ import { WHATSAPP_LINK } from "@/lib/constants";
 
 const PLANS = [
   {
-    name: "Prezentare",
-    price: "600 RON",
-    description: "Site profesional de prezentare, gata să atragă clienți.",
+    name: "Starter",
+    price: "120 EUR",
+    description: "Site de prezentare profesional, gata să atragă clienți.",
     features: [
       "Design 100% personalizat",
       "Până la 5 secțiuni",
@@ -16,31 +16,31 @@ const PLANS = [
       "SEO tehnic complet",
       "Hosting gratuit pe Vercel",
       "Domeniu configurat",
-      "Viteză 100/100 PageSpeed",
-      "Livrare în 7 zile",
+      "Scor PageSpeed 100/100",
+      "Livrat în 7 zile",
     ],
-    cta: "Vreau acest pachet",
+    cta: "Alege acest plan",
     highlight: false,
   },
   {
     name: "Premium",
-    price: "850 RON",
+    price: "170 EUR",
     description: "Site avansat cu animații, mai multe pagini și funcționalități extra.",
     features: [
-      "Tot ce include Prezentare",
-      "Animații și tranziții premium",
+      "Tot ce include Starter",
+      "Animații & tranziții premium",
       "Până la 10 secțiuni / pagini",
       "Formular de contact funcțional",
       "Integrare Google Analytics",
       "SEO avansat + meta tags",
-      "Livrare în 10 zile",
+      "Livrat în 10 zile",
     ],
-    cta: "Vreau acest pachet",
+    cta: "Alege acest plan",
     highlight: true,
   },
   {
     name: "3D & Motion",
-    price: "1.200 RON",
+    price: "240 EUR",
     description: "Experiență vizuală de top cu animații 3D și efecte cinematice.",
     features: [
       "Tot ce include Premium",
@@ -50,16 +50,16 @@ const PLANS = [
       "Micro-interacțiuni UI",
       "Optimizat pentru conversii",
       "Suport 30 zile post-livrare",
-      "Livrare în 14 zile",
+      "Livrat în 14 zile",
     ],
-    cta: "Vreau acest pachet",
+    cta: "Alege acest plan",
     highlight: false,
   },
 ];
 
 export default function OfferSection() {
   return (
-    <section id="pricing" className="py-24 px-4 sm:px-6" aria-label="Prețuri">
+    <section id="pricing" className="py-24 px-4 sm:px-6" aria-label="Pricing">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,12 +73,12 @@ export default function OfferSection() {
             Disponibilitate limitată
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-4">
-            Alege pachetul potrivit.
+            Alege planul potrivit.
             <br />
             <span className="text-zinc-400">Plată unică, fără abonament.</span>
           </h2>
           <p className="text-zinc-500 text-base max-w-xl mx-auto">
-            Fiecare pachet include hosting gratuit pe viață, cod sursă complet și proprietate totală.
+            Fiecare plan include hosting gratuit pe viață, codul sursă complet și proprietate deplină.
           </p>
         </motion.div>
 
@@ -98,7 +98,7 @@ export default function OfferSection() {
             >
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-bold px-4 py-1 rounded-full border border-zinc-700">
-                  ⭐ Cel mai popular
+                  &#11088; Cel mai popular
                 </div>
               )}
 
@@ -137,7 +137,7 @@ export default function OfferSection() {
                     : "bg-white text-black hover:bg-zinc-100"
                 }`}
               >
-                {plan.cta} →
+                {plan.cta} &#8594;
               </a>
             </motion.div>
           ))}
@@ -150,7 +150,7 @@ export default function OfferSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center text-zinc-600 text-sm mt-10"
         >
-          Ai nevoie de ceva personalizat? Scrie-mi pe WhatsApp și facem un pachet pe măsura ta.
+          Ai nevoie de ceva personalizat? Scrie-mi pe WhatsApp și construim un plan adaptat pentru tine.
         </motion.p>
       </div>
     </section>

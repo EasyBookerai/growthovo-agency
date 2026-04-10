@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className="border-t border-zinc-900 py-10 px-4 sm:px-6" aria-label="Footer">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-zinc-600 text-sm">
-          © {year}{" "}
+          &copy; {year}{" "}
           <span className="text-zinc-400 font-medium">Growthovo Media</span>.
-          All rights reserved.
+          Toate drepturile rezervate.
         </div>
         <div className="flex items-center gap-6 text-sm text-zinc-600">
           <a href="#services" className="hover:text-zinc-400 transition-colors">Servicii</a>

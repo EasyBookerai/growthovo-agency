@@ -59,7 +59,7 @@ export default function HeroSection() {
           variants={fadeUp}
           className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Construiesc site-uri rapide, curate și profesionale pentru afaceri care vor să crească. Plată unică.{" "}
+          Construiesc site-uri rapide, curate și profesionale pentru afaceri pregătite să crească. Plată unică.{" "}
           <span className="text-white font-medium">Fără abonament. Fără surprize.</span>
         </motion.p>
 
@@ -76,16 +76,16 @@ export default function HeroSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white text-black font-bold px-8 py-4 rounded-full text-base hover:bg-zinc-100 transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
-            aria-label="Contact Growthovo Media on WhatsApp"
+            aria-label="Contactează Growthovo Media pe WhatsApp"
           >
-            Vreau site-ul meu — de la 800 RON
-            <span aria-hidden="true">→</span>
+            Vreau site-ul meu &mdash; de la 650 RON
+            <span aria-hidden="true">&#8594;</span>
           </a>
           <a
             href="#pricing"
             className="text-zinc-400 hover:text-white text-sm font-medium transition-colors underline underline-offset-4"
           >
-            Vezi ce include
+            Vezi ce este inclus
           </a>
         </motion.div>
 
@@ -103,12 +103,12 @@ export default function HeroSection() {
           </div>
           <div className="hidden sm:block w-px h-8 bg-zinc-800" />
           <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-2xl">€0</span>
+            <span className="text-white font-bold text-2xl">&euro;0</span>
             <span>Hosting gratuit</span>
           </div>
           <div className="hidden sm:block w-px h-8 bg-zinc-800" />
           <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-2xl">1×</span>
+            <span className="text-white font-bold text-2xl">1&times;</span>
             <span>Plată unică</span>
           </div>
         </motion.div>
@@ -122,7 +122,7 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-600"
         aria-hidden="true"
       >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
+        <span className="text-xs tracking-widest uppercase">Derulează</span>
         <div className="w-px h-8 bg-gradient-to-b from-zinc-600 to-transparent" />
       </motion.div>
     </section>

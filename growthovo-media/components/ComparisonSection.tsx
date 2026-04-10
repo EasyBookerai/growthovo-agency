@@ -9,7 +9,7 @@ export default function ComparisonSection() {
     <section
       id="compare"
       className="py-24 px-4 sm:px-6"
-      aria-label="Growthovo vs Traditional Agencies"
+      aria-label="Growthovo vs Agenții Tradiționale"
     >
       <div className="max-w-3xl mx-auto">
         <motion.div
@@ -35,11 +35,11 @@ export default function ComparisonSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="rounded-2xl overflow-hidden border border-zinc-800"
           role="table"
-          aria-label="Comparison table: Growthovo vs Agencies"
+          aria-label="Tabel comparativ: Growthovo vs Agenții"
         >
           <div className="grid grid-cols-3 bg-zinc-900" role="row">
             <div className="p-4 text-zinc-500 text-sm font-medium" role="columnheader">
-              Feature
+              Caracteristică
             </div>
             <div className="p-4 text-center border-l border-r border-white/10 bg-white/5" role="columnheader">
               <span className="text-white font-bold text-sm">Growthovo</span>
